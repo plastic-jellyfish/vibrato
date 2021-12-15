@@ -11,7 +11,7 @@ const whiteKeys = document.querySelectorAll('.key.white')
 const blackKeys = document.querySelectorAll('.key.black')
 
 const title = window.document.title
-let url = window.document.location.href
+let url = 'https://vibrato-app.herokuapp.com/'
 
 const audioContext = new AudioContext()
 const buffer = audioContext.createBuffer(1,audioContext.sampleRate*1, audioContext.sampleRate)
