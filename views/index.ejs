@@ -18,7 +18,7 @@
   <div class="parent">
     <div class="child container">
         <h1>Ascii Monkcii+</h1>
-        <p>**Play-Record-Listen-Share**</p>
+        <p>**Compose-Record-Share**</p>
         <p id="displayDateTime"></p>
     </div>
     <div class="child container1"></div>
@@ -46,7 +46,7 @@
             <div data-role="controls" class="buttons">
               <button id="Record" class="record-button btn" ><i class="fas fa-circle"></i></button>
               <button id="Play" class="play-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-play"></i></button>
-              <button id="Save" class="save-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-arrow-down"></i></button>
+              <button id="Save" class="save-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-save"></i></button>
               <button id="Save" class="share-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-share"></i></button>
             </div>
               <!-- <a id="Share" href="#" class="song-link btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-share"></i></a> -->
@@ -62,6 +62,12 @@
         </div>
         <div class="child container6"></div>
   </div>  
+  <div class="overlay"></div>
+  <div class="share">
+    <h2>Share your composition with this Link</h2><br>
+    <a href="#" id="url">-</a>
+  </div>
+
   <canvas class="webgl"></canvas>
   <script type="module" src="/index.js"></script>
   <script type="text/javascript" src="/dat.gui.min.js"></script>

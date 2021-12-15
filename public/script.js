@@ -10,6 +10,9 @@ const keys = document.querySelectorAll('.key')
 const whiteKeys = document.querySelectorAll('.key.white')
 const blackKeys = document.querySelectorAll('.key.black')
 
+const overlay = document.querySelector('.overlay')
+const share = document.querySelector('.share')
+
 const title = window.document.title
 let url = 'https://vibrato-app.herokuapp.com/'
 
@@ -61,19 +64,39 @@ playButton.addEventListener('click', () => {
 })
 
 songLink.addEventListener('click', () => {
-  if(songLink.classList.contains('show')) {
-    if(navigator.share){
-      navigator.share({
-        title: `${title}`, 
-        url: `${url}`
-      }) .then(() => {
-        console.log('Thanks for sharing!')
-      })
-      .catch(console.error)
-    } else{
-      console.log('No Navigator')
+  if(saveButton.classList.contains('show')){
+    axios.post('/songs',{ songNotes: songNotes }).then(res => {
+      songLink.classList.add('show')
+      // songLink.href = '/songs/'+res.data._id
+      url += 'songs/' + res.data._id
+      // url += songLink.href
+      console.log(url)
+    })
+  }
+  if(url != 'https://vibrato-app.herokuapp.com/'){
+    if(songLink.classList.contains('show')) {
+      if(navigator.share){
+          navigator.share({
+            title: `${title}`, 
+            url: `${url}`
+          }) .then(() => {
+            console.log('Thanks for sharing!')
+          })
+          .catch(console.error)
+      } else{
+          console.log('No Navigator')
+          overlay.classList.add('show-share')
+          share.classList.add('show-share')
+          document.getElementById('url').innerHTML = url
+          document.getElementById('url').href = url
+      }
     }
   }
+})
+
+overlay.addEventListener('click', () => {
+  overlay.classList.remove('show-share')
+  share.classList.remove('show-share')
 })
 
 document.addEventListener('keydown', e => {
@@ -112,6 +135,7 @@ function stopRecording(){
   playButton.classList.add('show')
   saveButton.classList.add('show')
   songLink.classList.add('show')
+  url = 'https://vibrato-app.herokuapp.com/'
 }
 
 function playsong(){
