@@ -1,0 +1,194 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100vh;
+  font-family: "Zilla Slab";
+  background: rgb(27,27,31);
+}
+
+#play{
+  text-align: center;
+}
+
+.webgl
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    outline: none;
+}
+
+.parent{
+  display: grid;
+  grid-template-columns: 30vw 40vw 30vw;
+  grid-template-rows: 15vh 10vh 30vh 45vh;
+  justify-content: space-around;
+  
+  /* justify-items: center;
+  align-items: center; */
+  }
+  
+  .child{
+      /* border: 3px solid #333;
+      background-color: #dfdfdf;   */
+      /* align-self: center;
+      justify-self: center; */
+  }
+  
+  .container{
+      margin: 2em 1.5em;
+      color: white;
+      align-self: left;
+      grid-column: span 2;
+      align-self: baseline;
+      z-index: 1;
+  }
+  .container1{
+      grid-column: span 1;
+  }
+  .container2{
+      /* background-color:rgba(27, 27, 27, 0.3); */
+      /* padding: .7em; */
+      grid-column: span 3;
+      justify-self: center; 
+      /* align-self: center; */
+      z-index: 1;
+      /* border-radius: 10px; */
+  }
+  .container3{
+      grid-row: span 2;
+  }
+  .container4{
+      grid-column: span 2;
+  }
+  .container5{
+      width: 300px;
+       /* align-self: center; */
+      justify-self: center; 
+      z-index: 1;
+      align-items: center;
+  }
+  
+  h1{
+      font-size: 1.5rem;
+  }
+  
+  h2{
+      font-size: 1rem;
+      text-align: left;
+      width: 100%;
+  }
+  
+  p{
+      font-size: 1rem;
+      width: 100%;
+      color: rgb(170, 168, 168);
+  }
+  
+  [data-role="keys"] > button {
+      min-width: 55px;
+      max-width: 55px;
+      font-size: 1rem;
+      padding: 1.3em 1.3em;
+      margin-left: .5em;
+      margin-right: .5em;
+      margin-top: .4em;
+      background-color: hsla(224, 100%, 50%, 0.5);
+      border: none;
+      color: white;
+      font-weight: bold;
+      /* text-transform: uppercase; */
+      align-self: center;
+      border-radius: 40%;
+  }
+  
+  [data-role="controls"] > button {
+      min-width: 55px;
+      max-width: 55px;
+      font-size: 1rem;
+      padding: 1.3em 1.3em;
+      margin-left: .5em;
+      margin-right: .5em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      /* background-color: rgba(0, 67, 250, 0.5); */
+      border: none;
+      color: white;
+      /* font-weight: bold; */
+      /* text-transform: uppercase; */
+      align-self: center;
+      border-radius: 35px;
+      /* cursor: pointer */
+  }
+
+.btn{
+    --hue: 210;
+    --saturation: 100%;
+    background-color: hsla(var(--hue), var(--saturation), 50%, .5);
+    /* color: inherit; */
+}
+
+.song-link{
+  min-width: 55px;
+  max-width: 55px;
+  padding: 1.3em 1.3em;
+  margin-left: .5em;
+  margin-right: .5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background-color: hsla(var(--hue), var(--saturation), 50%, .5);
+  border-radius: 35px;
+  cursor:default;
+}
+
+.song-link:link{
+  color: white;
+}
+
+.record-button,
+.play-button
+{
+  --hue: 210;
+  --saturation: 100%;
+}
+  
+.record-button.active,
+.play-button.active
+{ 
+    --hue: 0;
+    --saturation: 100%;
+}
+  
+.record-button:hover
+{
+  background-color: hsla(var(--hue), var(--saturation), 30%, .5);
+  cursor: pointer;
+}
+ 
+.play-button.show:hover,
+.save-button.show:hover,
+.song-link.show:hover
+{
+  background-color: hsla(var(--hue), var(--saturation), 30%, .5);
+  cursor: pointer;
+}
+
+.play-button,
+.save-button,
+.song-link
+{
+    --saturation: 0%;
+  /* display: none; */
+}
+  
+.play-button.show,
+.save-button.show,
+.song-link.show
+{
+    --saturation: 100%;
+  /* display:unset; */
+}
