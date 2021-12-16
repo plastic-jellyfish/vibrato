@@ -25,7 +25,7 @@ body {
 .parent{
   display: grid;
   grid-template-columns: 30vw 40vw 30vw;
-  grid-template-rows: 15vh 10vh 30vh 45vh;
+  grid-template-rows: 15vh 13vh 27vh 45vh;
   justify-content: space-around;
   
   /* justify-items: center;
@@ -237,11 +237,17 @@ body {
 
 .info{
   display: none;
-  text-align: center;
+}
 
+#play1{
+  text-align: center;
+}
+
+.info1{
+  color:rgb(176, 179, 9);
 }
 
 .info.show{
-  display: unset;
-  text-align: center;
+  display:inherit;
+  color:rgb(243, 247, 7);
 }
