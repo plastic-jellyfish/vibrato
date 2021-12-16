@@ -198,6 +198,8 @@ gui.add(bgVol, 'BackVolume', 0, 1, .1)
 //             )
 //     })
 // })
+// gui.close()
+dat.GUI.toggleHide();
 
 keys.forEach(key => {
     key.addEventListener('click', () => {

@@ -78,7 +78,7 @@ songLink.addEventListener('click', () => {
       if(navigator.share){
           navigator.share({
             title: `${title}`, 
-            text: 'My Pangolingo:~ tune',
+            text: 'Play my tune',
             url: `${url}`
           }) .then(() => {
             console.log('Thanks for sharing!')
@@ -132,7 +132,7 @@ function startRecording(){
 }
 
 function stopRecording(){
-  playsong()
+  // playsong()
   playButton.classList.add('show')
   saveButton.classList.add('show')
   songLink.classList.add('show')

@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/x-icon" href="/texture/favicon.ico">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Zilla Slab">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css"> -->
+
   <script>
     const currentSong = <%- JSON.stringify(locals.song) || 'undefined' %>
   </script>
@@ -17,13 +20,19 @@
 <body>
   <div class="parent">
     <div class="child container">
-        <h1>Pangolingo:~</h1>
+        <h1><i class="fas fa-meteor"></i> Pangolingo:~</h1>
         <p>Compose+Share=></p>
         <p id="displayDateTime"></p>
     </div>
     <div class="child container1"></div>
         <div class="child container2">
-          <p id="play">Press Record, Playback, Save & Share </p>
+          <p id="play" class ="info <%= locals.song != null ? 'show' : '' %>">
+            Press Play <i class="fas fa-play"></i> to listen to your friends tune. <br> ***
+          </p>
+          <br>
+          <p id="play">
+            Compose a tune with <i class="fas fa-th"></i> numpad <br> <i class="fas fa-share"></i> Share with your friends.
+          </p>
         </div>
         <div class="child container3"></div>
         <div class="child container4"></div>
@@ -46,7 +55,7 @@
             <div data-role="controls" class="buttons">
               <button id="Record" class="record-button btn" ><i class="fas fa-circle"></i></button>
               <button id="Play" class="play-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-play"></i></button>
-              <button id="Save" class="save-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-save"></i></button>
+              <button id="Save" class="save-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-arrow-down"></i></button>
               <button id="Save" class="share-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-share"></i></button>
               <!-- <p>  1.Record &nbsp;->&nbsp; 2.Play &ensp;->&ensp; 3.Save &ensp;->&nbsp; 4.Share</p> -->
               <p>  &ensp; Record &ensp;=>&ensp; Play &ensp;=>&ensp; Save &ensp;=>&ensp; Share</p>

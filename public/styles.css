@@ -114,6 +114,10 @@ body {
       font-size: 1.5rem;
   }
   
+  .fas.fa-dragon{
+    font-size: .8em;
+  }
+  
   h2{
       font-size: 1rem;
       text-align: left;
@@ -229,4 +233,15 @@ body {
 {
     --saturation: 100%;
   /* display:unset; */
+}
+
+.info{
+  display: none;
+  text-align: center;
+
+}
+
+.info.show{
+  display: unset;
+  text-align: center;
 }
