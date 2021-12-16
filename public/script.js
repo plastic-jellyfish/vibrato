@@ -78,6 +78,7 @@ songLink.addEventListener('click', () => {
       if(navigator.share){
           navigator.share({
             title: `${title}`, 
+            text: 'My Pangolingo:~ tune',
             url: `${url}`
           }) .then(() => {
             console.log('Thanks for sharing!')

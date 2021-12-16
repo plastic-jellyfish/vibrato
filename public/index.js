@@ -65,9 +65,9 @@ line.material.transparent = true;
 
 scene.add( line );
 
-line.position.y =1.75    
+line.position.y =1    
 line.rotation.x =90
-
+line.scale.set(.7,.7,.7)
 // Mesh
 
 const box = new THREE.Mesh(geometry,material)
@@ -78,7 +78,7 @@ const particlesMesh1 = new THREE.Points(particlesGeometry1, particlesMaterial1)
 scene.add(box, particlesMesh,particlesMesh1)
 
 fetch("/texture/instances.json").then(r => r.json()).then(instanceData => {
-    let geometry = new THREE.BoxGeometry(0.005, 0.005, 0.005)
+    let geometry = new THREE.BoxGeometry(0.02, 0.02, 0.02)
     let material = new THREE.MeshPhongMaterial()
     let mesh = new THREE.InstancedMesh(geometry, material, instanceData.length)
     
@@ -91,9 +91,9 @@ fetch("/texture/instances.json").then(r => r.json()).then(instanceData => {
     }
 
     scene.add(mesh)
-   
+    mesh.scale.set(.4,.4,.4)
     // mesh.rotation.y= .4
-    mesh.position.y= .5
+    mesh.position.x= -.1
 })
 
 
@@ -104,14 +104,14 @@ fetch("/texture/instances.json").then(r => r.json()).then(instanceData => {
         const light1 = new THREE.PointLight(0x00ff00,10);
         light1.position.set(0,300,500);
         scene.add(light1);
-        const light2 = new THREE.PointLight(0x0000ff,10);
+        const light2 = new THREE.PointLight(0xff0000,10);
         light2.position.set(500,100,0);
         scene.add(light2);
-        const light3 = new THREE.PointLight(0xff0000,10);
-        light3.position.set(0,100,-500);
+        const light3 = new THREE.PointLight(0x0000ff,10);
+        light3.position.set(0,100,500);
         scene.add(light3);
-        const light4 = new THREE.PointLight(0x00ff00,10);
-        light4.position.set(-500,300,500);
+        const light4 = new THREE.PointLight(0x0000ff,10);
+        light4.position.set(-500,300,-500);
         scene.add(light4);
 
 // gui.add(pointLight.position, 'x').min(-10).max(10)
