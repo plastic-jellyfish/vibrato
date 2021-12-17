@@ -251,6 +251,11 @@ body {
   color:rgb(243, 247, 7);
 }
 
+.title{
+  text-decoration: none;
+  color: white;
+}
+
 .info.show{
   margin: 0;
   padding: 2%;

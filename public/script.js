@@ -121,6 +121,7 @@ function startRecording(){
   songNotes = []
   playButton.classList.remove('show')
   songLink.classList.remove('show')
+  document.getElementById('play1').classList.remove('show')
   saveFlag =1
 }
 
