@@ -2,11 +2,8 @@ require("dotenv").config();
 const express = require('express')
 const moongoose = require('mongoose')
 const Song = require('./models/songs')
+const userLocation = require('./models/locations')
 const app = express()
-
-// moongoose.connect('mongodb://localhost/songRecorder', {
-//     useNewUrlParser:true, useUnifiedTopology: true
-// })
 
 moongoose.connect(process.env.DATABASE, {
     useNewUrlParser:true, 
@@ -24,18 +21,16 @@ app.get('/', (req,res) => {
     res.render('index')
 })
 
-
-app.post('/songs', async (req,res) => {
+app.post('/tunes', async (req,res) => {
     const song = new Song({
         notes: req.body.songNotes
     })
 
     await song.save()
-
     res.json(song)
 })
 
-app.get('/songs/:id', async (req,res) =>{
+app.get('/tunes/:id', async (req,res) =>{
     let song
     try{
         song = await Song.findById(req.params.id)
@@ -45,5 +40,12 @@ app.get('/songs/:id', async (req,res) =>{
     res.render('index', {song:song})
 })
 
-// app.listen(5000)
+app.post('/userlocation', async (req,res) => {
+    const location = new userLocation({
+        location: req.body.userL
+    })
+    await location.save()
+    res.json(location)
+})
+
 app.listen(process.env.PORT || 5000)

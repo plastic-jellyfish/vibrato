@@ -1,32 +1,61 @@
-const WHITE_KEYS = ['z', 'x', 'c', 'v', 'b', 'n', 'm']
-const BLACK_KEYS = ['s', 'd', 'g', 'h', 'j']
-
 const recordButton = document.querySelector('.record-button')
 const playButton = document.querySelector('.play-button')
-const saveButton = document.querySelector('.save-button')
-const songLink = document.querySelector('.share-button')
-// const songLink = document.querySelector('.song-link')
+const aboutButton = document.querySelector('.about-button')
+const songLink = document.querySelector('.save-button')
 const keys = document.querySelectorAll('.key')
-const whiteKeys = document.querySelectorAll('.key.white')
-const blackKeys = document.querySelectorAll('.key.black')
-
 const overlay = document.querySelector('.overlay')
 const share = document.querySelector('.share')
-
 const title = window.document.title
 let url = 'https://vibrato-app.herokuapp.com/'
 
 const audioContext = new AudioContext()
 const buffer = audioContext.createBuffer(1,audioContext.sampleRate*1, audioContext.sampleRate)
-
 const channelData = buffer.getChannelData(0)
-
 var randNote = Math.floor(Math.random()*10)
 var freq =  Math.floor((Math.random() * 1000) + 1); 
 var cut = audioContext.currentTime
 var vibFreq = {vibrato: 4}
 var bgVol = {BackVolume: .5}
 
+let latitude = 29.677315
+let longitude = 91.139156
+let city= 'Lhasa'
+let locality = 'Chabxi'
+
+
+// jQuery.get("https://ipinfo.io", function(e) {
+//   console.log(e)
+// },"jsonp")
+
+// fetch('https://api.ipify.org/?format=json')
+//   .then(results => results.json())
+//   .then(data => console.log(data.ip))
+
+// mapButton.addEventListener('click', () => {
+  navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+    enableHighAccuracy: true
+  })
+  
+  function successLocation(position) {
+  // console.log(position.coords.latitude,position.coords.longitude)
+  latitude = position.coords.latitude
+  longitude= position.coords.longitude
+  const geoAPI = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+  
+  fetch(geoAPI)
+  .then(res => res.json())
+  .then(data => {
+    // console.log(data.city, data.locality)
+    city = data.city
+    locality = data.locality
+  })
+  }
+
+  function errorLocation() {
+     console.log(error in location)
+  }
+// })
+  
 for(let i=0 ; i<buffer.length; i++){
     channelData[i]= Math.random() *2 -1
 }
@@ -35,8 +64,6 @@ const primaryGainControl = audioContext.createGain()
 primaryGainControl.gain.setValueAtTime(0.05,0)
 primaryGainControl.connect(audioContext.destination)
 
-
-
 const keyMap = [...keys].reduce((map,key) => {
   map[key.dataset.note] = key
   return map
@@ -44,8 +71,14 @@ const keyMap = [...keys].reduce((map,key) => {
 
 let recordingStartTime
 let songNotes = currentSong && currentSong.notes
+let quote = []
 
-// console.log(currentSong)
+getData()
+async function getData(){
+  const response = await fetch('/texture/antiworkquotes.csv')
+  const data = await response.text()
+  quote = data.split('\n')
+}
 
 keys.forEach(key => {
   key.addEventListener('click', () => playNote(key))
@@ -55,33 +88,23 @@ if(recordButton){
   recordButton.addEventListener('click', toggleRecording)
 }
 
-saveButton.addEventListener('click', () => {
-  if(saveButton.classList.contains('show')) saveSong()
-})
-
 playButton.addEventListener('click', () => {
   if(playButton.classList.contains('show')) playsong()
+  if(songLink.classList.contains('show')) saveSong()
 })
 
 songLink.addEventListener('click', () => {
-  if(saveButton.classList.contains('show')){
-    axios.post('/songs',{ songNotes: songNotes }).then(res => {
-      songLink.classList.add('show')
-      // songLink.href = '/songs/'+res.data._id
-      url += 'songs/' + res.data._id
-      // url += songLink.href
-      console.log(url)
-    })
-  }
   if(url != 'https://vibrato-app.herokuapp.com/'){
     if(songLink.classList.contains('show')) {
       if(navigator.share){
           navigator.share({
             title: `${title}`, 
             text: 'Play my tune',
+            quote: quote[Math.floor(Math.random()*30)],
             url: `${url}`
           }) .then(() => {
-            console.log('Thanks for sharing!')
+            // console.log('Thanks for sharing!')
+            // console.log(quote[2])
           })
           .catch(console.error)
       } else{
@@ -89,25 +112,18 @@ songLink.addEventListener('click', () => {
           overlay.classList.add('show-share')
           share.classList.add('show-share')
           document.getElementById('url').innerHTML = url
-          document.getElementById('url').href = url
+          document.getElementById('url').href = url 
+          document.getElementById('quote').innerText = quote[Math.floor(Math.random()*30)] 
       }
     }
+    // resetURL()
   }
 })
 
 overlay.addEventListener('click', () => {
   overlay.classList.remove('show-share')
   share.classList.remove('show-share')
-})
-
-document.addEventListener('keydown', e => {
-  if (e.repeat) return
-  const key = e.key
-  const whiteKeyIndex = WHITE_KEYS.indexOf(key)
-  const blackKeyIndex = BLACK_KEYS.indexOf(key)
-
-  if (whiteKeyIndex > -1) playNote(whiteKeys[whiteKeyIndex])
-  if (blackKeyIndex > -1) playNote(blackKeys[blackKeyIndex])
+  // resetURL()
 })
 
 function toggleRecording(){
@@ -127,16 +143,14 @@ function startRecording(){
   recordingStartTime = Date.now()
   songNotes = []
   playButton.classList.remove('show')
-  saveButton.classList.remove('show')
   songLink.classList.remove('show')
 }
 
 function stopRecording(){
   // playsong()
   playButton.classList.add('show')
-  saveButton.classList.add('show')
   songLink.classList.add('show')
-  url = 'https://vibrato-app.herokuapp.com/'
+  resetURL()
 }
 
 function playsong(){
@@ -153,21 +167,40 @@ function playsong(){
   })
 }
 
+function resetURL(){
+  url = 'https://vibrato-app.herokuapp.com/'
+}
+
 function recordNote(note){
   songNotes.push({
     key: note,
     startTime: Date.now() - recordingStartTime
   })
-
+  // console.table(songNotes)
 }
 
-function saveSong(){
-  axios.post('/songs',{ songNotes: songNotes }).then(res => {
+let userLocation = []
+
+function recordLocation(id){
+  userLocation.push({
+    key: id,
+    latitude: latitude,
+    longitude: longitude,
+    city: city,
+    locality: locality
+  })
+  // console.table(userLocation)
+}
+
+async function saveSong(){
+  await axios.post('/tunes',{ songNotes: songNotes }).then(res => {
     songLink.classList.add('show')
-    // songLink.href = '/songs/'+res.data._id
-    url += 'songs/' + res.data._id
-    // url += songLink.href
+    url += 'tunes/' + res.data._id
     console.log(url)
+    recordLocation(res.data._id)
+  })
+  await axios.post('/userlocation',{ userL: userLocation }).then(res => {
+    // console.log(res.data)
   })
 }
 
@@ -252,3 +285,7 @@ const loop = () => {
   window.requestAnimationFrame(loop)
 }
 loop()
+
+aboutButton.addEventListener('click', () => {
+  // document.location.href="https://flowmap.blue/1HrpeeqErr94Zu9cVuPviCCixRpuYb8EW-TTcH5vS4oA"
+})
