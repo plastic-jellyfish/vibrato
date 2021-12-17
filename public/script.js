@@ -22,7 +22,7 @@ let longitude = 91.139156
 let city= 'Lhasa'
 let locality = 'Chabxi'
 
-
+// changeIcon = (icon) => icon.classList.toggle('fa-times')
 // jQuery.get("https://ipinfo.io", function(e) {
 //   console.log(e)
 // },"jsonp")
@@ -90,35 +90,9 @@ if(recordButton){
 
 playButton.addEventListener('click', () => {
   if(playButton.classList.contains('show')) playsong()
-  if(songLink.classList.contains('show')) saveSong()
 })
 
-songLink.addEventListener('click', () => {
-  if(url != 'https://vibrato-app.herokuapp.com/'){
-    if(songLink.classList.contains('show')) {
-      if(navigator.share){
-          navigator.share({
-            title: `${title}`, 
-            text: 'Play my tune',
-            quote: quote[Math.floor(Math.random()*30)],
-            url: `${url}`
-          }) .then(() => {
-            // console.log('Thanks for sharing!')
-            // console.log(quote[2])
-          })
-          .catch(console.error)
-      } else{
-          console.log('No Navigator')
-          overlay.classList.add('show-share')
-          share.classList.add('show-share')
-          document.getElementById('url').innerHTML = url
-          document.getElementById('url').href = url 
-          document.getElementById('quote').innerText = quote[Math.floor(Math.random()*30)] 
-      }
-    }
-    // resetURL()
-  }
-})
+
 
 overlay.addEventListener('click', () => {
   overlay.classList.remove('show-share')
@@ -128,6 +102,7 @@ overlay.addEventListener('click', () => {
 
 function toggleRecording(){
   recordButton.classList.toggle('active')
+  document.querySelector('.fas.fa-circle').classList.toggle('fa-times')
   if(isRecording()){
     startRecording()
   } else{
@@ -139,11 +114,14 @@ function isRecording(){
   return recordButton != null && recordButton.classList.contains('active')
 }
 
+let saveFlag =0
+
 function startRecording(){
   recordingStartTime = Date.now()
   songNotes = []
   playButton.classList.remove('show')
   songLink.classList.remove('show')
+  saveFlag =1
 }
 
 function stopRecording(){
@@ -192,6 +170,41 @@ function recordLocation(id){
   // console.table(userLocation)
 }
 
+songLink.addEventListener('click', () => {
+  if((songLink.classList.contains('show')) && saveFlag ===1){
+    saveSong()
+    saveFlag =0
+  }
+  else shareTune()
+})
+
+function shareTune(){
+  if(url != 'https://vibrato-app.herokuapp.com/'){
+      if(songLink.classList.contains('show')) {
+        if(navigator.share){
+            navigator.share({
+              title: `${title}`, 
+              text: 'Play my tune',
+              quote: quote[Math.floor(Math.random()*30)],
+              url: `${url}`
+            }) .then(() => {
+              // console.log('Thanks for sharing!')
+              // console.log(quote[2])
+            })
+            .catch(console.error)
+        } else{
+            console.log('No Navigator')
+            overlay.classList.add('show-share')
+            share.classList.add('show-share')
+            document.getElementById('url').innerHTML = url
+            document.getElementById('url').href = url 
+            document.getElementById('quote').innerText = quote[Math.floor(Math.random()*30)] 
+        }
+      }
+      // resetURL()
+    }
+}
+
 async function saveSong(){
   await axios.post('/tunes',{ songNotes: songNotes }).then(res => {
     songLink.classList.add('show')
@@ -202,6 +215,7 @@ async function saveSong(){
   await axios.post('/userlocation',{ userL: userLocation }).then(res => {
     // console.log(res.data)
   })
+  shareTune()
 }
 
 function playNote(key){

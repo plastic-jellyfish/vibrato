@@ -265,5 +265,6 @@ body {
 }
 
 .about-button{
-  --saturation:0%
+  --saturation:0%;
+  color:grey
 }
