@@ -1,3 +1,4 @@
+// const dotenv = require("dotenv").config();
 const recordButton = document.querySelector('.record-button')
 const playButton = document.querySelector('.play-button')
 const aboutButton = document.querySelector('.about-button')
@@ -22,16 +23,34 @@ let longitude = 91.139156
 let city= 'Lhasa'
 let locality = 'Chabxi'
 
-// changeIcon = (icon) => icon.classList.toggle('fa-times')
-// jQuery.get("https://ipinfo.io", function(e) {
+// jQuery.get("http://ipinfo.io", function(e) {
 //   console.log(e)
 // },"jsonp")
 
 // fetch('https://api.ipify.org/?format=json')
 //   .then(results => results.json())
-//   .then(data => console.log(data.ip))
+//   .then(data => console.log(data))
 
-// mapButton.addEventListener('click', () => {
+
+
+async function json(url) {
+  const res = await fetch(url)
+  return await res.json()
+}
+
+let apiKey = 'fd2fc840fdf2b920a39b2e7ace19e5d63f48630e172e1a3cd1c9c88e'
+json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
+  console.log(data.ip)
+  console.log(data.city)
+  console.log(data.country_code)
+  console.log(data.time_zone.current_time)
+  console.log(data.asn.name)
+});
+
+
+getLocation()
+
+function getLocation(){
   navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
     enableHighAccuracy: true
   })
@@ -54,7 +73,7 @@ let locality = 'Chabxi'
   function errorLocation() {
      console.log(error in location)
   }
-// })
+}
   
 for(let i=0 ; i<buffer.length; i++){
     channelData[i]= Math.random() *2 -1
@@ -79,6 +98,29 @@ async function getData(){
   const data = await response.text()
   quote = data.split('\n')
 }
+
+const text = baffle('.spam')
+text.set({
+  characters: '▒▒▒ ▒▒█/█ █▓░▓▒ ▓░▒ ░░▓▓▓ ▒▒░/ <▒▓ ██░░ ▒▓<░', 
+  speed: 150
+})
+text.start()
+// text.reveal(4000)
+
+document.querySelector('.spam').addEventListener('mouseover' || 'touchstart',() => {
+  text.stop()  
+  text.reveal(2000)
+})
+document.querySelector('.spam').addEventListener('mouseout' || 'touchend',() => {
+  text.start()  
+})
+
+const asterisk = baffle('.about-button')
+asterisk.set({
+  characters: '#*^/\=+~', 
+  speed: 200
+})
+asterisk.start()
 
 keys.forEach(key => {
   key.addEventListener('click', () => playNote(key))
@@ -119,6 +161,7 @@ let saveFlag =0
 function startRecording(){
   recordingStartTime = Date.now()
   songNotes = []
+  userLocation = []
   playButton.classList.remove('show')
   songLink.classList.remove('show')
   document.getElementById('play1').classList.remove('show')
@@ -172,35 +215,39 @@ function recordLocation(id){
 }
 
 songLink.addEventListener('click', () => {
-  if((songLink.classList.contains('show')) && saveFlag ===1){
-    saveSong()
-    saveFlag =0
-  }
-  else shareTune()
+  // if(latitude != 29.677315){
+    if((songLink.classList.contains('show')) && saveFlag ===1){
+      saveSong()
+      saveFlag =0
+    }
+    else shareTune()
+  // }
+  // else getLocation()
 })
 
 function shareTune(){
   if(url != 'https://vibrato-app.herokuapp.com/'){
       if(songLink.classList.contains('show')) {
-        if(navigator.share){
-            navigator.share({
-              title: `${title}`, 
-              text: 'Play my tune',
-              quote: quote[Math.floor(Math.random()*30)],
-              url: `${url}`
-            }) .then(() => {
-              // console.log('Thanks for sharing!')
-              // console.log(quote[2])
-            })
-            .catch(console.error)
-        } else{
-            console.log('No Navigator')
-            overlay.classList.add('show-share')
-            share.classList.add('show-share')
-            document.getElementById('url').innerHTML = url
-            document.getElementById('url').href = url 
-            document.getElementById('quote').innerText = quote[Math.floor(Math.random()*30)] 
-        }
+        TelegramGameProxy.shareScore()
+        // if(navigator.share){
+        //     navigator.share({
+        //       title: `${title}`, 
+        //       text: 'Play my tune',
+        //       quote: quote[Math.floor(Math.random()*30)],
+        //       url: `${url}`
+        //     }) .then(() => {
+        //       // console.log('Thanks for sharing!')
+        //       // console.log(quote[2])
+        //     })
+        //     .catch(console.error)
+        // } else{
+        //     console.log('No Navigator')
+        //     overlay.classList.add('show-share')
+        //     share.classList.add('show-share')
+        //     document.getElementById('url').innerHTML = url
+        //     document.getElementById('url').href = url 
+        //     document.getElementById('quote').innerText = quote[Math.floor(Math.random()*30)] 
+        // }
       }
       // resetURL()
     }

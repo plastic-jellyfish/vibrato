@@ -63,10 +63,10 @@ body {
   }
 
   .spam{
-    font-size: .6em;
-    text-align: center;
+    font-size: .7em;
+    /* text-align: center; */
     text-transform: uppercase;
-    display: none;
+    /* display: none; */
   }
 
   .flow{
@@ -270,6 +270,7 @@ body {
 }
 
 .about-button{
+  background-color: hsla(var(--hue), var(--saturation), 30%, 0);
   --saturation:0%;
   color:grey
 }

@@ -11,6 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>const currentSong = <%- JSON.stringify(locals.song) || 'undefined' %></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/baffle@0.3.6/dist/baffle.min.js"></script>
   <script src="/script.js" defer></script>
   <title>Pangolingo:~</title>
 </head>
@@ -22,8 +23,9 @@
         <p id="displayDateTime"></p>
     </div>
     <div class="child container1">
-      <p class="spam">Antiwork/Notspam</p>
+      <p class="spam">Notspam</p><br>
       <a class="flow" href="https://flowmap.blue/1HrpeeqErr94Zu9cVuPviCCixRpuYb8EW-TTcH5vS4oA">Flowmap <i class="fas fa-wind"></i></a>
+      
     </div>
         <div class="child container2">
           <p id="play1" class ="info <%= locals.song != null ? 'show' : '' %>">
@@ -53,7 +55,8 @@
             </div>
             
             <div data-role="controls" class="buttons">
-              <button id="About" class="about-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-asterisk"></i></button>
+              <!-- <button id="About" class="about-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-asterisk"></i></button>-->
+              <button id="About" class="about-button btn <%= locals.song != null ? 'show' : '' %>" >*</button>
               <button id="Record" class="record-button btn" ><i class="fas fa-circle"></i></button>
               <button id="Play" class="play-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-play" ></i></button>
               <button id="Save" class="save-button btn <%= locals.song != null ? 'show' : '' %>" ><i class="fas fa-share"></i></button>
@@ -71,5 +74,6 @@
   <canvas class="webgl"></canvas>
   <script type="module" src="/index.js"></script>
   <script type="text/javascript" src="/dat.gui.min.js"></script>
+  <script src="https://telegram.org/js/games.js"></script>
 </body>
 </html>
