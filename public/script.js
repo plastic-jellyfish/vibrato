@@ -242,10 +242,10 @@ function shareTune(){
         //     .catch(console.error)
         // } else{
         //     console.log('No Navigator')
-        //     overlay.classList.add('show-share')
-        //     share.classList.add('show-share')
-        //     document.getElementById('url').innerHTML = url
-        //     document.getElementById('url').href = url 
+            overlay.classList.add('show-share')
+            share.classList.add('show-share')
+            document.getElementById('url').innerHTML = url
+            document.getElementById('url').href = url 
         //     document.getElementById('quote').innerText = quote[Math.floor(Math.random()*30)] 
         // }
       }

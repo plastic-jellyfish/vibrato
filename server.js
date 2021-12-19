@@ -62,6 +62,7 @@ app.post('/userlocation', async (req,res) => {
 
 // Matches /start
 bot.onText(/\/start/, function onPhotoText(msg) {
+    url = 'https://vibrato-app.herokuapp.com/';
     bot.sendGame(msg.chat.id, gameName);
 });
   
