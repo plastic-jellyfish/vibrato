@@ -20,6 +20,30 @@ const locationSchema = new mongoose.Schema({
     locality:{
         type: String,
         required: true
+    },
+    time: {
+        type: String,
+        required: true
+    },
+    ip:{
+        type: String,
+        required: true
+    },
+    ipCity:{
+        type: String,
+        required: true
+    },
+    ipCountry:{
+        type: String,
+        required: true
+    },
+    ipTime:{
+        type: String,
+        required: true
+    },
+    ipName:{
+        type: String,
+        required: true
     }
 })
 

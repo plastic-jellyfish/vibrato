@@ -22,6 +22,11 @@ let latitude = 29.677315
 let longitude = 91.139156
 let city= 'Lhasa'
 let locality = 'Chabxi'
+let ip = '0.0.0.0'
+let ipCity = 'internet'
+let ipCountry = 'WD'
+let ipTime = 'NoTime'
+let ipName = 'NoName'
 
 // jQuery.get("http://ipinfo.io", function(e) {
 //   console.log(e)
@@ -31,8 +36,6 @@ let locality = 'Chabxi'
 //   .then(results => results.json())
 //   .then(data => console.log(data))
 
-
-
 async function json(url) {
   const res = await fetch(url)
   return await res.json()
@@ -40,11 +43,16 @@ async function json(url) {
 
 let apiKey = 'fd2fc840fdf2b920a39b2e7ace19e5d63f48630e172e1a3cd1c9c88e'
 json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
-  console.log(data.ip)
-  console.log(data.city)
-  console.log(data.country_code)
-  console.log(data.time_zone.current_time)
-  console.log(data.asn.name)
+  ip = data.ip
+  ipCity = data.city
+  ipCountry = data.country_code
+  ipTime = data.time_zone.current_time
+  ipName = data.asn.name
+  // console.log(ip)
+  // console.log(ipCity)
+  // console.log(ipCountry)
+  // console.log(ipTime)
+  // console.log(ipName)
 });
 
 
@@ -204,12 +212,22 @@ function recordNote(note){
 let userLocation = []
 
 function recordLocation(id){
+  var today = new Date();
+  var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' | '+time;
   userLocation.push({
     key: id,
     latitude: latitude,
     longitude: longitude,
     city: city,
-    locality: locality
+    locality: locality,
+    time: dateTime,
+    ip: ip,
+    ipCity: ipCity,
+    ipCountry: ipCountry,
+    ipTime: ipTime,
+    ipName: ipName
   })
   // console.table(userLocation)
 }
